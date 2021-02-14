@@ -1,12 +1,41 @@
-Zeit es ahora Vercel
+Linter, extensiones y deploy con Vercel
 
--Zeit pasó a llamarse Varcel. Y esto trajo algunos cambios.
+-Vamos a instalar el linter StandardJS, se basa en no usar ';'.
+-Viene con reglas tanto para JS, como para React, por lo que nos ayudará en ambos.
 
--En la próxima clase verás que el profesor realiza el deploy con Now, entonces cada vez que el profesor 
-    mencione “now.json” deberías reemplazarlo por “vercel.json”, de la misma manera, en la terminal se debería 
-    utilizar la palabra vercel.
+Preparar el entorno con el eslint Estandard JS:
+    1. Debemos instalar 'estandard' como desarrollo. Creamos el script: "lint": "standard". Cuando ejecutamos 
+        este script, nos dirá los errores dentro del editor y de la consola.
+    2. Agregamos en el package.json, despues de dependences, para que se ignore todo lo de la carpeta api al 
+        ejecutar 'standard':
+            "standard": {
+                "ignore": [
+                    "/api/**"
+                ]
+            }
+    3. Tambien agregamos esta linea, para que el editor nos muestre cuando eslint detecte un error:
+        "eslintConfig": {
+            "extends": ["./node_modules/standard/eslintrc.json"]
+        }
+    4. Debemos tener instaladas las extensiones de prettier y eslint.
+    5. Fijarnos en settings (ctrl + ,) que el 'Format on save' este apagado. Esto para que no haya conflictos 
+        entre el formateo del linter y del editor.
+            .Aquí mismo debemos tener la integración de prettier con eslint, y además, activar el autofix de
+                eslint, lo hacemos aquí mismo, en el logo como de archivo en la parte superior izquierda 
+                'Open settings (JSON)'. y aquí pegamos la siguiente config:
+                    "editor.codeActionsOnSave": {
+                        "source.fixAll.eslint": true
+                    },
+                    "eslint.format.enable": true,
+                    "prettier.eslintIntegration": true
 
--Ante cualquier duda, aquí está la documentación de Vercel para que puedas orientarte.
+-Ahora, debemos hacer deploy de la carpeta api que teniamos en el repo. porque esta contiene todo el backend
+    que usará nuestra app, para ello usaremos Vercel (antes Now).
+-Nos loguearemos con GH e instalamos el cli de Vercel: npm i -g vercel
+-Entramos a la carpeta de la API, damos el comando 'vercel', nos logueamos y nos dará un link para acceder al
+    backend.
 
--De todas maneras, cualquier duda que tengas, puedes escribirla en el sistema de comentarios y con gusto te 
-    ayudaremos.
+Desplegar nuestra app en internet:
+    1. Creamos en la raiz del proyectp el archivo vercel.json, con el contenido como lo tenemos en el ejemplo.
+    2. En la terminal nos movemos a la raiz del proyecto y volvemos a ejecutar 'vercel'. Lo que nos dará un
+        link donde tenemos nuestro frontend.

@@ -1,12 +1,14 @@
 {
-  "name": "curso-platzi-react-avanzado",
+  "name": "curso-platzi-react-avanzado-jonathangg_03",
   "version": "1.0.0",
   "description": "Curso de React avanzado",
   "main": "src/index.js",
   "scripts": {
     "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack serve --mode development --env development"
+    "dev": "webpack serve --mode development --env development",
+    "lint": "standard",
+    "vercel-build": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -23,7 +25,11 @@
     "@babel/preset-env": "^7.12.16",
     "@babel/preset-react": "^7.12.13",
     "babel-loader": "^8.2.2",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-prettier": "^3.3.1",
     "html-webpack-plugin": "^5.1.0",
+    "prettier": "^2.2.1",
+    "standard": "^16.0.3",
     "webpack": "^5.21.2",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2"
@@ -31,5 +37,15 @@
   "dependencies": {
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
+  },
+  "standard": {
+    "ignore": [
+      "/api/**"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "./node_modules/standard/eslintrc.json"
+    ]
   }
 }
