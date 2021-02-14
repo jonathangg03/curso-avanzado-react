@@ -1,28 +1,4 @@
-Bienvenida al curso y prerrequisitos
+Instalación de React y Babel
 
-¿Por qué debes seguir profundizando en tus conocimientos de React?
-    -Actualmente es la tecnología más demandada del mercado.
-    -Divide el código utilizando React.lazy.
-    -Render props.
-    -Hooks personalizados.
-    -Comparte la lógica con componentes de orden superior.
-
-Qué significa que react sea declarativo:
-    -Viendolo alrevez, ser imperativo significa que hay que especificar cada paso para poder llegar a un 
-        resultado.
-    -Por ejemplo comer sushi, hay que tomar el telefono, ver el restaurante, conseguir el numero, llamar, 
-        cuando fue entregado abrir la orden, sacar el sushi, servirlo, y finalmente comer el sushi.
-    -En el caso de algo declarativo, solo colocaríamos la instrucción 'Comer sushi'.
-
-Teconologías para el proyecto:
-    -Webpack.
-    -Babel.
-    -Styled-components (librería).
-    -Standard JS (linter).
-    -GraphQL (para fetching de datos).
-    -React Apollo (cliente).
-    -Reach Router (alternativa a React router).
-    -Cypress (testing).
-    -React helmet (SEO).
-    -Workbox (creación de service workers para PWA).
-    -Now (deploy)
+-Sí no queremos usar un archivo aparte para babel, porque solo tenemos los 2 plugins, podemos agregar en las
+    options del loader de babel un array presets, con ambos presets instalados (env y react).
