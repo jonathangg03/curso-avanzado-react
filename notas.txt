@@ -1,22 +1,18 @@
-¿Qué es CSS-in-JS?
+Creando nuestro primer componente: Category
 
--Antes teniamos separadas cada funcionalidad en HTML CSS y JS (HTML-centric).
--Luego, podiamos tener dentro de un JS un render, que retornara HTML (JSX) y llamará a un archivo css (JS-centric).
--Ahora, pasamos a CSS-in-JS, nos permite no solo hacer el jsx si no colocar los estilos en el mismo JavaScript, 
-    de la siguiente manera:
-        const Button = styled.button`
-        border-radius: 4px;
-        ${props => props.accent && `
-            background: red;
-            color: #fff;
-        `}
-        render () {
-            return (
-                <Button>
-                    Click here!
-                </Button>
-            )
-        }
--Con CSS-in-JS no debemos preocuparnos por tener dos clases igual, no nos debemos preocupar por el Critical Path 
-    CSS, tendremos un CSS mucho más óptimo.
--Para esto, usaremos styled-components, biblioteca para CSS-in-JS pensada más que todo para React.
+Estructura de desarrollo:
+    -La estructura en la que organizamos nuestro proyecto va a ser un poco distinta a lo habitual.
+    -Cada componente no será un archivo, sino una carpeta, está tendrá por ahora 2 archivos, un index.js para 
+        el contenido, y un styles.js para los estilos.
+    -El componente se exportará de manerá diferente, para poder tener coherencia en la organización, no lo 
+        exportamos con default, sino que colocamos 'export const component' y ahí definimos el componente.
+    -En el archivo styles.js haremos los estilos como lo explicamos a continuación.
+
+-Instalaremos la dependencia: styled-components.
+
+Creación de un style-component:
+    -Importamos la dependencia, el nombre usado será styled.
+    -Cada constante la exportaremos por separado, y cada una será un elemento html con un grupo de estilos.
+    -El valor de la constante será: styled.[etiqueta]`estilos...`
+    -Al colocar un elemento en un componente, si queremos que tenga los estilos que definimos, importamos la
+        constante requerida, y la colocamos como etiqueta en el JSX.
