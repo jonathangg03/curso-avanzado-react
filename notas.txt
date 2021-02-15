@@ -1,9 +1,5 @@
-Creando ListOfCategories y estilos globales
+Usar información real de las categorías
 
--Syle-components nos permite tener una lista de estilos que se aplicarán de forma global.
--Esto antes se tenía en un archivo donde se agregaban los estilos globales.
--Para esto, dentro del src creamos un archivo .js, y este importará 'createGlobalStyle' de 'styled-components'.
--Exportamos la constante, esta como valor tendrá createGlobalStyle`selector{estilos}`.
--Como vemos, esta cambia en que se ´pueden agregar multiples selectores para poder setear estilos por defecto.
--Para agregar los estilos en todo el documento, en el DOM.render, lo que renderizamos será un div, con la app
-    que teniamos y con el componente que acabamos de crear.
+-Cuando vamos a usar props, sí queremos usar todas las props en lugar de hacer <Component atr1={val}...>, lo
+    que hacemos es esto <Component {...object}>, sí object tiene keys con el mismo nombre de las props, le dara
+    los valores de esas key a las props, y se coloca solo una vez.
