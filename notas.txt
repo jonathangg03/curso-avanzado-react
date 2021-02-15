@@ -1,7 +1,12 @@
-Creando PhotoCard y usando react-icon
+SVGR: de SVG a componente de ReactJS
 
--react-icons es una librería que se usa para poder usar diferentes iconos de varias apps existentes (como 
-    fontawesome).
--Para usarlos, la instalamos, buscamos en la pagina de donde queremos el icono, y nos mostrará una línea para
-    poder usar ese icono (es un import).
--Luego de importar con esa línea, el elemento importado se coloca como JSX dentro del render.
+-Crearemos el logo desde 0, usando la app maketext.io
+-Colocamos un texto, seleccionamos el que nos guste, y descargamos como svg.
+-Dicho texto, lo vamos a pasar a al optimizador de SVG  https://jakearchibald.github.io/svgomg/, simplemente
+    abriendolo o arrastrando el archivo hacia el centro de la página.
+        .Tenemos 2 opciones, guardarlo para usarlo como imagen, esta no la hicimos.
+        .La otra es copiar el svg generado, y pasarlo a una página que nos convierta el svg que ingresemos en
+            un componente de React.
+        .Esa página es https://react-svgr.com/playground/, y solamente pegamos el contenido en la derecha, y a
+            la izq. nos dá el componente de react, que pegaremos en un js.
+        .A este le podemos dar estilos creando su archivo style igualmente, donde la etiqueta usada sea svg.
