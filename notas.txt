@@ -1,12 +1,19 @@
-SVGR: de SVG a componente de ReactJS
+Creando animaciones con keyframes
 
--Crearemos el logo desde 0, usando la app maketext.io
--Colocamos un texto, seleccionamos el que nos guste, y descargamos como svg.
--Dicho texto, lo vamos a pasar a al optimizador de SVG  https://jakearchibald.github.io/svgomg/, simplemente
-    abriendolo o arrastrando el archivo hacia el centro de la página.
-        .Tenemos 2 opciones, guardarlo para usarlo como imagen, esta no la hicimos.
-        .La otra es copiar el svg generado, y pasarlo a una página que nos convierta el svg que ingresemos en
-            un componente de React.
-        .Esa página es https://react-svgr.com/playground/, y solamente pegamos el contenido en la derecha, y a
-            la izq. nos dá el componente de react, que pegaremos en un js.
-        .A este le podemos dar estilos creando su archivo style igualmente, donde la etiqueta usada sea svg.
+-Para que un componente tenga una animación con keyframes, en los estilos, debemos importar el elemento 
+    'keyframes', crear una constante, darle como valor: keyframes`animación` y dentro tendrá todo lo que tiene
+    un keyframe como animación.
+-Para usarla dentro de algun style-component, se coloca al propiedad 'animation', y como valor el nombre de esa
+    constante, junto con el tiempo y el tipo (que normalmente tiene esta propiedad).
+-Este atributo animation podríamos ingresarlo dentro de una constante para que sea reusable, como valor de ella
+    agregamos una función, los parametros que se colocaran son el tiempo y el tipo (se puede colocar alguno por
+    defecto), pero estos se agregan dentro de un objeto, y este se iguala a otro objeto vacío.
+        .La función retornará el elemento 'css' que debemos importar de 'styled-components', y lo que tendrá 
+            dentro de sus comillas '``' será la propiedad animation que vamos a reusar, que tendrá como valores
+            el tiempo, el tipo, y la animación a reusar.
+
+Hacer reusable esta animación:
+    -La animación y la constante las guardamos en un archivo aparte, la constante debe usar la animación.
+    -Exportaremos solo la constante, y esta la podemos importar en cualquier archivo de estilos.
+
+-Esto servirá no solo para animaciones, sino para hacer cualquier tipo de propiedades reusables.
