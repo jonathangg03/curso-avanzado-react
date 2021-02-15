@@ -1,18 +1,9 @@
-Creando nuestro primer componente: Category
+Creando ListOfCategories y estilos globales
 
-Estructura de desarrollo:
-    -La estructura en la que organizamos nuestro proyecto va a ser un poco distinta a lo habitual.
-    -Cada componente no será un archivo, sino una carpeta, está tendrá por ahora 2 archivos, un index.js para 
-        el contenido, y un styles.js para los estilos.
-    -El componente se exportará de manerá diferente, para poder tener coherencia en la organización, no lo 
-        exportamos con default, sino que colocamos 'export const component' y ahí definimos el componente.
-    -En el archivo styles.js haremos los estilos como lo explicamos a continuación.
-
--Instalaremos la dependencia: styled-components.
-
-Creación de un style-component:
-    -Importamos la dependencia, el nombre usado será styled.
-    -Cada constante la exportaremos por separado, y cada una será un elemento html con un grupo de estilos.
-    -El valor de la constante será: styled.[etiqueta]`estilos...`
-    -Al colocar un elemento en un componente, si queremos que tenga los estilos que definimos, importamos la
-        constante requerida, y la colocamos como etiqueta en el JSX.
+-Syle-components nos permite tener una lista de estilos que se aplicarán de forma global.
+-Esto antes se tenía en un archivo donde se agregaban los estilos globales.
+-Para esto, dentro del src creamos un archivo .js, y este importará 'createGlobalStyle' de 'styled-components'.
+-Exportamos la constante, esta como valor tendrá createGlobalStyle`selector{estilos}`.
+-Como vemos, esta cambia en que se ´pueden agregar multiples selectores para poder setear estilos por defecto.
+-Para agregar los estilos en todo el documento, en el DOM.render, lo que renderizamos será un div, con la app
+    que teniamos y con el componente que acabamos de crear.
