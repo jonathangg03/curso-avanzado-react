@@ -1,5 +1,7 @@
-Usar información real de las categorías
+Creando PhotoCard y usando react-icon
 
--Cuando vamos a usar props, sí queremos usar todas las props en lugar de hacer <Component atr1={val}...>, lo
-    que hacemos es esto <Component {...object}>, sí object tiene keys con el mismo nombre de las props, le dara
-    los valores de esas key a las props, y se coloca solo una vez.
+-react-icons es una librería que se usa para poder usar diferentes iconos de varias apps existentes (como 
+    fontawesome).
+-Para usarlos, la instalamos, buscamos en la pagina de donde queremos el icono, y nos mostrará una línea para
+    poder usar ese icono (es un import).
+-Luego de importar con esa línea, el elemento importado se coloca como JSX dentro del render.
