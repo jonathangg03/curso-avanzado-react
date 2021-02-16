@@ -1,19 +1,14 @@
-Creando animaciones con keyframes
+¿Qué son los Hooks?
 
--Para que un componente tenga una animación con keyframes, en los estilos, debemos importar el elemento 
-    'keyframes', crear una constante, darle como valor: keyframes`animación` y dentro tendrá todo lo que tiene
-    un keyframe como animación.
--Para usarla dentro de algun style-component, se coloca al propiedad 'animation', y como valor el nombre de esa
-    constante, junto con el tiempo y el tipo (que normalmente tiene esta propiedad).
--Este atributo animation podríamos ingresarlo dentro de una constante para que sea reusable, como valor de ella
-    agregamos una función, los parametros que se colocaran son el tiempo y el tipo (se puede colocar alguno por
-    defecto), pero estos se agregan dentro de un objeto, y este se iguala a otro objeto vacío.
-        .La función retornará el elemento 'css' que debemos importar de 'styled-components', y lo que tendrá 
-            dentro de sus comillas '``' será la propiedad animation que vamos a reusar, que tendrá como valores
-            el tiempo, el tipo, y la animación a reusar.
+-Funciones que nos permiten acceder a casi todas las caracteristicas de React desde componentes funcionales.
+-Se dice casi todas porque no se pueden hacer 2: getSnapshootBeforeUpdate y componentDidCatch.
+-Los principales son: useState, useEffect, y useContext, que nos ayuda a acceder la API context, para obtener
+    valores que vamos a utilizar en toda la app, sin necesidad de pasarlas por las props.
 
-Hacer reusable esta animación:
-    -La animación y la constante las guardamos en un archivo aparte, la constante debe usar la animación.
-    -Exportaremos solo la constante, y esta la podemos importar en cualquier archivo de estilos.
+Más ventajas:
+    -100% retrocompatibles (sí queremos usarlas en código sin hooks, solamente las usamos sin romper nada).
+    -Mejora la transpilación de babel.
+    -Mejor performance.
 
--Esto servirá no solo para animaciones, sino para hacer cualquier tipo de propiedades reusables.
+IMPORTANTE: En el ejemplo hicimos un fetch, pero este no funcionó, tuvimos que invocar a window.fetch() para
+    que funcionará.
