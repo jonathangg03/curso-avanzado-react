@@ -1,24 +1,19 @@
-Usando Intersection Observer
+Uso de polyfill de Intersection Observer e imports dinámicos
 
-prop ref: 
-    -Esta es una prop especial de React, que nos ayuda a capturar el elemento del DOM.
-    -Sí tenemos una constante cuyo valor sea el hook de useRef(null), y esta constante se la pasamos a la
-        prop ref, en esa constante tenemos el elemento del DOM al que hace referencia.
-    -Para acceder al elemento como tal, de esa constante accedemos al elemento current.
+-Como intersectionObserver no tiene total soporte, usaremos un polyfill.
+-Instalación: npm i intersection-observer.
+-Como no queremos que el la dependencia se cargue siempre, sino que solo cuando se necesita, haremos un import
+    dinamico.
+-Para ello, usamos el metodo import('dependencia'). Esto devuelve una promesa, cuando se resuelva, colocamos
+    dentro el código que había en el useEffect.
+-Puede que nos pida usar un plugin de babel para usar intersection-observer, el plugin es: 
+    @babel/plugin-syntax-dynamic-import, colocamos en la conf. de babel el elemento plugin y colocamos esto.
 
-Intersection Observer:
-    -Cuando tenemos una constante que como valor tenga una instancia de window.IntersectionObserver(), podemos
-        ver cuando un elemento está o nó en el dom.
-    -El IntersectionObserver tiene como parametro una función, donde el 1er parametro de esta son las entries,
-        que es cuando un elemento entra o sale del viewport, y que elemento es.
-            .Sí el elemento esta dentro del viewport, esta entry tendrá en la 1er posición un elemento 
-                isIntersecting estará en true.
-    -La función del IO tiene la lógica de lo que hará este.
-        .En nuestro programa, como queremos que una vez la imagen se renderiza, quede ahí siempre, 
-            desconectamos el IO con el metodo disconnect().
-    -Para indicar el elemento que estarémos observando en caso de una intersección, usaremos el metodo observe()
-        del IO, y colocamos el elemento del DOM que queremos 'observar'.
+Hacer uso de ese import dinamico solo cuando el navegador no soporta IO:
+    -Validaremos sí el typeof de window.intersectionObserver es distinto de undefined.
+    -En caso de serlo, el navegador lo soporta, asi que retornamos window.intersectionObserver.
+    -En caso contrario, hacemos el import dinamico.
+    -El valor de esa validación lo obtenemos de forma asincrona.
 
--En nuestro ejemplo lo que estamos haciendo es una especie de lazy loading, donde sí el elemento tiene la 
-    propiedad isIntersecting en true, se renderice, en caso contrario, no lo haga, y cuando lo haga, 
-    desconectamos el IO.
+-Nota: En caso de que el import de error, es por el linter, para ello, instalamos babel-eslint, en la conf. del
+    eslint en el package, agregamos un elemento parser, con el babel-eslint como valor.
