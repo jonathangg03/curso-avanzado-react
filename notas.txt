@@ -1,5 +1,20 @@
-Refactorizando y usando variables de loading y error
+Usando las mutaciones con los likes
 
--En esta clase vemos algunas buenas practicas:
-    .Manejar y renderizar diferentes cosas dependiendo si se esta en loading o en error.
-    .La query (lo que sea gql`query`), debe estar dentro de una constante, para usarla cuando se necesite.
+-Podemos dar like a un elemento y se guardará porque lo tenemos en el localStorage, pero debemos actualizar
+    el núm. de likes.
+
+-El componente de mutation es otro componente importante en una aplicación Apollo. Es un componente React que 
+    proporciona una función para ejecutar una mutation de GraphQL para así alterar la data. Además, rastrea el 
+    estado de carga, finalización y error de esa mutación.
+
+Uso del Mutation:
+    -Importaremos Mutation de 'react-apollo'.
+    -Se define el mutation, igual que un query, pero con la palabra 'mutation'.
+    -Renderizaremos el Mutation, como atributo 'mutation' el que creamos. Y renderizara el prop children.
+    -Al colocar en el render el componente con el mutation, este igualmente renderizará una función.
+    -Dentro de la función realizaremos los cambios que deseamos enviar a la DB.
+        .Sí dentro de la conf del mutation, tenemos alguna variable (parametro), la manejamos dentro de esta
+            función en un objeto llamado 'variables', este objeto cada key será el nombre que definimos en
+            el mutation.
+    -Retornaremos el elemento que usará la mutación, sí este tiene un evento, que la función que llamé sea
+        la anterior definida (sí este evento modificará la DB).
