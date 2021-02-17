@@ -1,23 +1,5 @@
-Usar render Props para recuperar una foto
+Refactorizando y usando variables de loading y error
 
-renderProps: 
-    -Lo que hace es tomar la props.children, y en lugar de renderizar un elemento, renderiza una función.
-    -La función debe retornar el elemento que queremos renderizar. ¿Pero entonces cual es el sentido?.
-    -Los parametros que recibe esta función es la información que queremos inyectar en ese componente que 
-        vamos a renderizar, ese es sú sentido.
-
-Router improvisado:
-    -Haremos un router improvisado, que no es lo más recomendable.
-    -Tendremos una variable con: new window.URLSearchParams(window.location.search);
-    -Otra que tenga el metodo get() de lo anterior, y por parametro el elemento que queremos obtener del url 
-        (como en match.params).
-    -Con esto, obtenemos un valor del url, el que se colocó en el get, como se hacía con match.params.
-
-Componente creado con Render Props:
-    -Importaremos 'gql' de 'apollo-bust' y 'Query' de 'react-apollo'.
-    -Colocamos la query con los parametros de lo que deseamos obtener.
-    -Query lo colocamos como un componente, su atributo 'query' tendrá la query creada, y el atributo 
-        'variables' recibe un objeto, este tendrá la información que queremos inyectar en el componente.
-    -Dentro del componente Query, no renderizamos un componente, sino una función, esta tiene como params.
-        un objeto, con el loading, el error y el data (el data debe inicializarse, sino dará error).
-    -Esta data tendrá lo traido por la query, y debe retornar un componente que utilice esta data.
+-En esta clase vemos algunas buenas practicas:
+    .Manejar y renderizar diferentes cosas dependiendo si se esta en loading o en error.
+    .La query (lo que sea gql`query`), debe estar dentro de una constante, para usarla cuando se necesite.
