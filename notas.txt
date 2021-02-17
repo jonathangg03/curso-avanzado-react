@@ -1,55 +1,11 @@
-¿Qué es GraphQL y React Apollo? Inicializando React Apollo Client y primer HoC
+Parámetros para un query con GraphQL
 
-GraphQL:
-    -lenguaje creado por Facebook para obtener solo los datos que realmente necesitamos en nuestra aplicación.
-    -Imaginemos que tenemos una REST API con WordPress, él nos entrega un JSON con mucha data innecesaria y solo 
-        queremos unos cuantos fields; GraphQL hace posible obtener únicamente esa data.
-    -Nos permite describir nuestros datos, de forma que podemos decir que tipo tiene cada uno, y estas 
-        validaciones ocurrirán tanto del lado del cliente como del servidor.
-    -Obtenemos datos predecibles porque nosotros mismos somos los que identificamos que es lo que vamos a 
-        necesitar en nuestra app.
-    -No sustituye a las API REST.
-        .GraphQL es un lenguaje, se puede conectar a REST API y a cualquier otro tipo de API. REST es una 
-            arquitectura.
-        .GraphQL nos da un solo endpoint desde el que pediremos la info que necesitamos, REST tiene multiples.
-        .GraphQL trae justo los datos necesarios, REST puede traer mucha o muy poca info. (over y underfetching).
-        .GraphQL se conecta a otras API, REST normalmente tendrá conexiones directas a las DB.
+-En esta clase, separaremos la lógica en el componente a renderizar, en una carpeta hoc (high order components)
+    guardaremos el query, y en otra llamada 'container' guardaremos la implementación del query para traer
+    los datos.
 
-React Apollo:
-    -Es un cliente que nos va a permitir conectarnos a un servidor GraphQL.
-    -Es tambien el cliente que tiene las conexiones perfectas con la librería React.
-
-Dependencias a instalar:
-    -apollo-boost: Nos permite inicializar nuestra conexión con un servidor de Apollo muy rápidamente y sin 
-        configuración.
-    -react-apollo: El cual es la integración de Apollo con React.
-    -GraphQL: Las 3 son de prod.
-
-configuración inicial:
-    -Es similar a la de Redux, donde tenemos un provider que encapsula la App para que pueda ser accedida desde
-        cualquier parte.
-    -Importaremos apollo-boost (con el nombre ApolloClient) e importamos ApolloProvider de react-apollo.
-    -Creamos una instancia de ApolloClient, que tenga como param un obj.  con la config.
-        .Por ahora tendrá solo el elemento uri, y como valor la url del servidor que creamos al inicio, pero, 
-            al final tendrá '/graphql'. En el ejemplo es: https://petgram-server-khaki-psi.vercel.app/graphql
-    -El ApolloProvider encapsula la App, y como valor de su atributo client, agregamos el cliente hecho.
-
-Traer los datos:
-    -En el componente, importamos 'graphql' de 'react-apollo', y 'gql' de 'apollo-boost'.
-    -Creamos una constante, esta será la que contendrá los datos, es un metodo.
-        .Como valor tendrá graphql(), como parametro gql``.
-        .Dentro de las comillas, tendrá el query (abajo explicaremos lo que es.)
-    -Ahora, para usar los datos, vamos a hacer cambios.
-    -La constante que exportamos tendrá como valor el elemento con los datos, y como parametro  el componente 
-        que se renderizará.
-    -El compoenten que se renderizará estará en otra función, y como parametro estarán las props, pero estas
-        ahorá lo que tendrán será un elemento 'data', este será el devuelto por graphql, con la información
-        que se solicitó.
-    -Segun lo solicitado en la query, tendrá un elemento con ese nombre.
-
-Qué es la query:
-    -En la query, definimos lo que se traerá.
-    -Podemos probarla en el link que se puso en la conf. en la parte izq.
-    -La que usamos para este ejemplo sería: query getPhotos{}.
-    -Dentro tendría un objeto photos{} (este está dentro de la DB), y esta contendrá los datos a traer.
-    -En este caso, data en las props, tendrá un elemento photos, y esta tiene todos los datos que se trajeron.
+Parametros del query:
+    -En el ejemplo: getPhotos($categoryId:ID): Donde $categoryId será el id que se buscará (en nuestro caso
+        por ahora se pasará por props), y ID es el tipo.
+    -photos(categoryId: $categoryId): categoryId es el elemento a buscar dentro de la DB, y $categoryId es lo
+        que estamos buscando.
