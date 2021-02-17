@@ -1,19 +1,18 @@
-Uso de polyfill de Intersection Observer e imports dinámicos
+Usando el localStorage para guardar los likes
 
--Como intersectionObserver no tiene total soporte, usaremos un polyfill.
--Instalación: npm i intersection-observer.
--Como no queremos que el la dependencia se cargue siempre, sino que solo cuando se necesita, haremos un import
-    dinamico.
--Para ello, usamos el metodo import('dependencia'). Esto devuelve una promesa, cuando se resuelva, colocamos
-    dentro el código que había en el useEffect.
--Puede que nos pida usar un plugin de babel para usar intersection-observer, el plugin es: 
-    @babel/plugin-syntax-dynamic-import, colocamos en la conf. de babel el elemento plugin y colocamos esto.
+-Usaremos el localStorage para guardar sí le dimos like o no a una foto.
 
-Hacer uso de ese import dinamico solo cuando el navegador no soporta IO:
-    -Validaremos sí el typeof de window.intersectionObserver es distinto de undefined.
-    -En caso de serlo, el navegador lo soporta, asi que retornamos window.intersectionObserver.
-    -En caso contrario, hacemos el import dinamico.
-    -El valor de esa validación lo obtenemos de forma asincrona.
+-window.localStorage: Nos permitirá tener dentro de nuestro navegador, un grupo de variables guardadas dentro
+    del mismo navegador, siempre que no tengamos activada la busqueda privada (por esta razón, todo lo que
+    use al localStorage se hara dentro de un try/catch).
 
--Nota: En caso de que el import de error, es por el linter, para ello, instalamos babel-eslint, en la conf. del
-    eslint en el package, agregamos un elemento parser, con el babel-eslint como valor.
+Guardar un valor en el localStorage:
+    -Declaramos una función.
+    -Debe invocar al metodo setItem(). Tiene 2 prams
+        .1: Nombre de la 'variable' (key) que guardará.
+        .2: El valor que esta tendrá.
+
+-En la app, guardaremos el like dentro de un estado, pero, como el valor inicial de ese estado lo tenemos que
+    obtener del localStorage, el valor inicial será una función.
+-Dicha función retornará una variable, está tendrá como valor lo devuelto por el getItem() del localStorage, y
+    como param. el key con el que se almacenó en el localStorage.
