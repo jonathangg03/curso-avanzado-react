@@ -1,10 +1,29 @@
 import React from 'react'
 import { PhotoCard } from '../PhotoCard'
+import { graphql } from 'react-apollo'
+import { gql } from 'apollo-boost'
 
-export const ListOfPhotoCard = () => (
-  <ul>
-    {
-      [1, 2, 3, 4, 5, 6, 7].map(id => <PhotoCard key={id} id={id} />)
+const withPhotos = graphql(gql`
+  query getPhotos {
+    photos {
+      id,
+      categoryId,
+      src,
+      likes,
+      userId,
+      liked
     }
-  </ul>
-)
+  }
+`)
+
+const ListOfPhotoCardComponent = ({ data: { photos = [] } } = {}) => {
+  return (
+    <ul>
+      {
+        photos.map(photo => <PhotoCard key={photo.id} {...photo} />)
+      }
+    </ul>
+  )
+}
+
+export const ListOfPhotoCard = withPhotos(ListOfPhotoCardComponent)
