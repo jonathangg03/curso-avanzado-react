@@ -1,24 +1,11 @@
-useEffect: limpiando eventos
+useCategoriesData
 
--En esta clase hacemos que se tenga 2 columnas de las 'historias', una grande, y una pequeña, pero que esta se
-    muestre solo cuando el scroll se movió, pasando las historias.
-
--En esta clase lo importante es saber que se pueden tener 2 o más useEffect a la vez.
-
-Para lograr este efecto:
-    -Tenemos un estado, que nos indica si la pequeña se estará mostrando y no, su valor inicial será false.
-    -Tendremos una función (onScroll), esta tendrá una constante, que nos devolverá true sí el scroll está 
-        200 grados encima en el eje Y, y false si no.
-    -Sí el valor que tenemos en el estado es distinto al de esta constante, colocaremos el estado con el mismo
-        valor que tenga la constante.
-    -Luego de esta función, activaremos un eventListenner, con el eveto 'scroll', que llame a la anterior func.
-    -Como hicimos un eventListenner, sí el componente se deja de renderizar, el evento se seguirá escuchando,
-        para evitarlo, retornaremos una función, que remueva ese eventListenner (removeEventListenner).
-    -El elemento que estará escuchando cambios será el del estado.
-    -Finalmente, renderizaremos el grande siempre, y el pequeño solo cuando el estado sea true.
-
-scroll:
-    -Para detectar el scroll de arriba a abajo, usamos window.scrollY.
-
-Nota: Recordar que cuando en los estilos tenemos &.clase{}; esto indica que '&' es el elemento padre, en caso
-    de que los estilos se coloquen en un 'ul', sería como colocar: ul.clase{estilos};
+classNames en styled-components:
+    -Es buena practica no tener className en styled-components.
+    -En la clase anterior teniamos una, para que el componente pequeño tuviera distintos estilos sí este tenía
+        una prop 'fixed'.
+    -Para solucionarlo, ya no tendrá className, sino una prop con ese nombre.
+    -En los estilos, para validar sí el elemento tiene esa prop o no, colocamos un ${}.
+    -Dentro, tendremos una función, como parametro tendrá props, y retornamos la validación, sí dentro de props
+        tenemos la prop requerida (props.fixed p.ej), entonces llamamos a css de 'styled-components', y dentro
+        tendrá los estilos a aplicar en caso de que el componente tenga esta prop.
