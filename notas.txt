@@ -1,18 +1,7 @@
-Usando el localStorage para guardar los likes
+Custom Hooks: useNearScreen y useLocalStorage
 
--Usaremos el localStorage para guardar sí le dimos like o no a una foto.
-
--window.localStorage: Nos permitirá tener dentro de nuestro navegador, un grupo de variables guardadas dentro
-    del mismo navegador, siempre que no tengamos activada la busqueda privada (por esta razón, todo lo que
-    use al localStorage se hara dentro de un try/catch).
-
-Guardar un valor en el localStorage:
-    -Declaramos una función.
-    -Debe invocar al metodo setItem(). Tiene 2 prams
-        .1: Nombre de la 'variable' (key) que guardará.
-        .2: El valor que esta tendrá.
-
--En la app, guardaremos el like dentro de un estado, pero, como el valor inicial de ese estado lo tenemos que
-    obtener del localStorage, el valor inicial será una función.
--Dicha función retornará una variable, está tendrá como valor lo devuelto por el getItem() del localStorage, y
-    como param. el key con el que se almacenó en el localStorage.
+-Cuando traemos un custom hook, si lo que retornamos es un array, por solo tener 2 valores, al usarlo, los
+    nombres los podemos cambiar.
+-En nuestro ejemplo, retornamos en el hook [storedValue, setLocalStorage], y al usarlo, cambiamos los nombres
+    por [liked, setLiked].
+-Esto no funciona sí lo que retornamos fue un {}, aquí sí tendríamos que retornarlo con su nombre original.
