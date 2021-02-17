@@ -1,11 +1,24 @@
-useCategoriesData
+Usando Intersection Observer
 
-classNames en styled-components:
-    -Es buena practica no tener className en styled-components.
-    -En la clase anterior teniamos una, para que el componente pequeño tuviera distintos estilos sí este tenía
-        una prop 'fixed'.
-    -Para solucionarlo, ya no tendrá className, sino una prop con ese nombre.
-    -En los estilos, para validar sí el elemento tiene esa prop o no, colocamos un ${}.
-    -Dentro, tendremos una función, como parametro tendrá props, y retornamos la validación, sí dentro de props
-        tenemos la prop requerida (props.fixed p.ej), entonces llamamos a css de 'styled-components', y dentro
-        tendrá los estilos a aplicar en caso de que el componente tenga esta prop.
+prop ref: 
+    -Esta es una prop especial de React, que nos ayuda a capturar el elemento del DOM.
+    -Sí tenemos una constante cuyo valor sea el hook de useRef(null), y esta constante se la pasamos a la
+        prop ref, en esa constante tenemos el elemento del DOM al que hace referencia.
+    -Para acceder al elemento como tal, de esa constante accedemos al elemento current.
+
+Intersection Observer:
+    -Cuando tenemos una constante que como valor tenga una instancia de window.IntersectionObserver(), podemos
+        ver cuando un elemento está o nó en el dom.
+    -El IntersectionObserver tiene como parametro una función, donde el 1er parametro de esta son las entries,
+        que es cuando un elemento entra o sale del viewport, y que elemento es.
+            .Sí el elemento esta dentro del viewport, esta entry tendrá en la 1er posición un elemento 
+                isIntersecting estará en true.
+    -La función del IO tiene la lógica de lo que hará este.
+        .En nuestro programa, como queremos que una vez la imagen se renderiza, quede ahí siempre, 
+            desconectamos el IO con el metodo disconnect().
+    -Para indicar el elemento que estarémos observando en caso de una intersección, usaremos el metodo observe()
+        del IO, y colocamos el elemento del DOM que queremos 'observar'.
+
+-En nuestro ejemplo lo que estamos haciendo es una especie de lazy loading, donde sí el elemento tiene la 
+    propiedad isIntersecting en true, se renderice, en caso contrario, no lo haga, y cuando lo haga, 
+    desconectamos el IO.
