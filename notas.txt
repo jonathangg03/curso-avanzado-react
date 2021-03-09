@@ -1,9 +1,1 @@
-Usando Link para evitar recargar la página
-
--Reach Router usa Link de igual manera que React Router.
--Tambien se puede usar dentro del archivo de estilos del componente, sí 'Styled' lo colocamos como metodo
-    y le pasamos como parametro el link.
-
--En nuestro ejemplo, vemos que al dar click en el link del logo (que lleva al home), no enfoca el icono, 
-    esto por el foco en la accesibiliadad, haciendo que enfoque directamente donde está cambiando el
-    contenido.
+Creando la página Detail
