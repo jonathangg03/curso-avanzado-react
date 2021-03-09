@@ -1,13 +1,30 @@
-Rutas protegidas
+    Introducción a React Context
 
--Un ejemplo de rutas protegidas es que se nos muestre una página con una ruta sí estamos logueados, y sí no
-    lo estamos, nos muestre otra página pero en la misma ruta.
+-Crearemos un contexto.
+-Este encapsulara toda la app, incluyendo el Apollo Provider.
+-Ya no necesitamos la render prop, ahorá el que lo sustituye será el Context.Consumer.
+-La variable para verificar la autenticación la sacaremos del Context.Provider, de su atributo value, el
+    cual tendrá un objeto con esta variable.
 
--Para hacer esto, usaremos una render prop.
--Debemos definir una función que retorne el children de sus props, children será un metodo, y como param.
-    tendrá un objeto, este puede tener diferentes variables. Tendremos un booleano para ver si esta login.
--Al colocar esta función como JSX en la app, sí internamente colocamos una render prop, podemos hacer uso
-    de los elementos que se colocaron en el children.
--Para obtenerlos, se harán en un objeto, que será el parametro de la func. del render prop.
--Con esto hecho, podemos renderizar un componente u otro en la misma ruta, dependiendo sí el booleano
-    es verdadero o falso.
+Crear un contexto:
+    -Importamos 'createContext' de React.
+    -Es un metodo, y se lo damos como valor a una constante que exportaremos.
+    -Como parametro tendrá el valor inicial del contexto.
+
+Compartir el contexto por toda la app.
+    -El contexto se colocará como JSX.
+    -Su elemento Provider encapsulará toda la app.
+    -Para que un componente pueda usar ese contexto, usaremos su elemento Consumer.
+    -Este lo colocamos tambien como JSX, encapsulará los elementos que usarán ese contexto.
+
+-Ahora lo haremos dinamico, y haremos que un boton se muestre si no estamos logueados, y al dar click, 
+    simule un login.
+
+-Creamos una render prop.
+-Esta retorna el Provider.
+-En caso de que le ingresemos variables o metodos por defecto al Provider (como el de autenticación), las 
+    ingresaremos en su atributo value, un objeto, que tenga estos.
+-Lo que exportaremos será un objeto, con el provider, y con un elemento Consumer, que tenga como valor el
+    Consumer del context.
+-Como lo colocamos en una render prop, al colocar el Consumer, los params de la función dentro del 
+    Consumer serán las variables y metodos especiales que se crearon.
