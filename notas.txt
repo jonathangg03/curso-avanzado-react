@@ -1,16 +1,9 @@
-¿Qué es Reach Router? Creando la ruta Home
+Usando Link para evitar recargar la página
 
-Razones por las que usaremos Reach Router en lugar de React Router:
-    -Más sencillo, con mejores practicas, y su foco es la accesibiliadad.
-    -Se unirá con React Router en el futuro, donde el 'ganador' será React Router, pero tomará muchas cosas
-        del otro.
-    -Para ir familiarizandonos es que usaremos Reach Router.
+-Reach Router usa Link de igual manera que React Router.
+-Tambien se puede usar dentro del archivo de estilos del componente, sí 'Styled' lo colocamos como metodo
+    y le pasamos como parametro el link.
 
-Uso de Reach Router:
-    -Dependencia Reach Router: @reach/router.
-    -Importamos 'Router' de él. Este es un componente.
-    -Dentro colocamos los componentes que se renderizarán, con un atributo path que indica la ruta en la
-        cual se renderizarán.
-    -Igual que en React Router, podemos usar una variable dentro de la ruta con '/:var'.
-    -Recordar que el nombre que tenga la variable en la url debe ser igual al nombre de la variable que le
-        dará su valor.
+-En nuestro ejemplo, vemos que al dar click en el link del logo (que lleva al home), no enfoca el icono, 
+    esto por el foco en la accesibiliadad, haciendo que enfoque directamente donde está cambiando el
+    contenido.
