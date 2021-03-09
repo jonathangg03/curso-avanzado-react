@@ -1,1 +1,11 @@
-Creando la página Detail
+
+Estilando las páginas activas
+
+-Cuando tenemos un grupo de Link, estos se verán representados como anclas, las cuales tienen un atributo
+    'aria-current'.
+-Sí damos estilos a este atributo, estos estilos se aplicarán sí estamos en la ruta que representa ese Link
+    de ese selector.
+-Por ejemplo, sí colocamos al home, se aplicarán los estilos del Link que diriga al home.
+-En styled-components, para señalar ese atributo, colocamos & (indica al selector padre), inmediatamente
+    seguido de [aria-current]{estilos}.
+-Para colocar pseudoelementos, lo hacemos igual, con el '&'.
