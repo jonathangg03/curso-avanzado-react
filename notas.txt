@@ -4,3 +4,4 @@ Creación del componente UserForm; y Hook useInputValue
 -No guardará nombres, solo valores.
 -Como el onChange y el value, se estan retornando en el custom hook con ese mismo nombre, podemos usar 
     dentro del input un spread operator para que del hook se consigan todos sus valores (value y onChange).
+-Para que lo anterior se cumpla, al retornar los valores del custom hook deben venir dentro de un objeto.
