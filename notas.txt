@@ -1,7 +1,14 @@
-Creación del componente UserForm; y Hook useInputValue
+Controlar estado de carga y error al registrar un usuario
 
--En nuestro programa creamos un custom hook para que en su estado guarde los valores que tendrá el input.
--No guardará nombres, solo valores.
--Como el onChange y el value, se estan retornando en el custom hook con ese mismo nombre, podemos usar 
-    dentro del input un spread operator para que del hook se consigan todos sus valores (value y onChange).
--Para que lo anterior se cumpla, al retornar los valores del custom hook deben venir dentro de un objeto.
+-En el param. la func. del render prop donde realizamos la mutación, nos llega la info que se va a enviar,
+    pero tambien, el otro parametro será un objeto, que contiene data, loading y error para los estados
+    de esa petición.
+
+-Para nuestro caso, es recomendable que al dar al boton de registrar, mientras se carga una respuesta, los
+    elementos del form esten desactivados para no interactuar con ellos hasta que haya una respuesta.
+-Lo que haremos será pasar la prop disabled (esta tienen todos los elementos HTML) y darle como valor
+    el estado 'loading', así se desactivará mientras loading sea true.
+
+-Para el error estamos pasando por la prop error una constante, que tenga como valor: error && 'mensaje'.
+-Esto significa que dicha variable, sí hay algun error en el parametro para el error, la constante tendrá
+    como valor el mensaje colocado.
