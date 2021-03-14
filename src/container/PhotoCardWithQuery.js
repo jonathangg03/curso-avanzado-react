@@ -24,7 +24,7 @@ const renderProp = ({ loading, error, data = {} }) => {
 }
 
 export const PhotoCardWithQuery = ({ id }) => (
-  <Query query={GET_SINGLE_PHOTO} variables={{ id }}>
+  <Query query={GET_SINGLE_PHOTO} variables={{ id }} fetchPolicy='network-only'>
     {renderProp}
   </Query>
 )

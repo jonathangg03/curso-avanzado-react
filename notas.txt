@@ -1,11 +1,7 @@
-Mostrar favoritos y solucionar fetch policy
+Cerrar sesión
 
--La query para mostrar los favoritos tiene la particularidad de que sí no se le pasa el header con el JWT
-    nos devolverá error.
-
--En este caso, la lista de las imagenes favoritas a renderizar las pasaremos por props.
--A la hora de colocar el componente con el Query, como atributo, colocaremos fetchPolicy, y le daremos
-    como valor 'network-only', para que siempre saque la Información de la web (del server), y su primer
-    fuente de consulta no sea la cache (por defecto).
--Esto lo que hará es que al darle like a una foto, en la pestaña de favoritos se actualice ese like (o 
-    dislike) y nos muestre esa foto, en caso contrario, habría que recargar la página para que se muestre.
+-En esta clase agregamos un metodo al contexto, para poner la variable que indica sí se esta autenticado en
+    false, y quitar el token del sessionStorage.
+-Este metodo lo llamaremos en el click de un boton.
+-Como añadido, hicimos que un botton sea reusable, pero para ello, tenemos que pasarle las props que los
+    componentes donde se colocará el boton requieren.
