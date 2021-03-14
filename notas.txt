@@ -1,10 +1,26 @@
-Mutaciones para iniciar sesión
+Persistiendo datos en Session Storage
 
--La Api de GraphQL esta programada para que, sí hacemos el login, y tenemos el password que no va con el 
-    email, nos devuelva un error de password incorrecto.
--La estructura del mutation es la misma que la de register.
--El uso y render prop son igual que en el de registro.
+-Esto es para que cuando recargamos la página, la sesión se esta perdiendo, entonces con esto, hacemos que
+    se recuerde que el usuario ya esta autenticado.
 
-Nota: Para probar el login, y los errores y carga de la clase pasada, se registró el usuario:
-    user: jona@gmail.com
-    pass: 1234
+-Recordando, al hacer el login o register, nos devuelve una promesa, lo devuelto por esa propesa será un
+    objeto, el cual tendrá otro llamado data, que tendrá un elemento cuyo key sería login/signup, y cuyo
+    valor sería el token (llamado JS Web Token) devuelto por Graphql que lo que nos indica es que el 
+    usuario está autendicado.
+
+1.En el contexto, tenemos que hacer que la function activateAuth() (que indicaba si estabamos autenticados)
+    tenga un parametro, que será el token.
+2.A esta function, se le agregará el metodo window.sessionStorage.setItem(). Esta será para colocarle un
+    valor al objeto window.sessionStorage, por lo que como parametros recibe el key con el que se guardará
+    y su valor, que será el token.
+3.Damos valor al parametro donde se llamaba esta function (ya sabemos donde estarán estos token).
+4.Por defecto teniamos que el estado de sí esta autenticado erá false, ahora será una función que retorne
+    el token, este lo obtenemos con window.sessionStorage.getItem() y le pasamos el keyword.
+
+-Para poder limpiar la sesión, en DevTools vamos a 'Aplication' > 'Clear storage'.
+
+El resto de lo que hacemos es una reestructuración del programa.
+    -Se exporto el contexto por aparte.
+    -Se importo, y se uso de este contexto solamente lo necesario.
+    -Para usarlo, en el componente que requiere algun dato de este contexto se usa useContext(contexto).
+    -Con esto, ya no se necesitaría el consumer, solo lo que vamos a renderizar.
