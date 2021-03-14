@@ -1,14 +1,10 @@
-Controlar estado de carga y error al registrar un usuario
+Mutaciones para iniciar sesión
 
--En el param. la func. del render prop donde realizamos la mutación, nos llega la info que se va a enviar,
-    pero tambien, el otro parametro será un objeto, que contiene data, loading y error para los estados
-    de esa petición.
+-La Api de GraphQL esta programada para que, sí hacemos el login, y tenemos el password que no va con el 
+    email, nos devuelva un error de password incorrecto.
+-La estructura del mutation es la misma que la de register.
+-El uso y render prop son igual que en el de registro.
 
--Para nuestro caso, es recomendable que al dar al boton de registrar, mientras se carga una respuesta, los
-    elementos del form esten desactivados para no interactuar con ellos hasta que haya una respuesta.
--Lo que haremos será pasar la prop disabled (esta tienen todos los elementos HTML) y darle como valor
-    el estado 'loading', así se desactivará mientras loading sea true.
-
--Para el error estamos pasando por la prop error una constante, que tenga como valor: error && 'mensaje'.
--Esto significa que dicha variable, sí hay algun error en el parametro para el error, la constante tendrá
-    como valor el mensaje colocado.
+Nota: Para probar el login, y los errores y carga de la clase pasada, se registró el usuario:
+    user: jona@gmail.com
+    pass: 1234
