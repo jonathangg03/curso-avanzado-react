@@ -1,26 +1,49 @@
-Persistiendo datos en Session Storage
+Hacer like como usuario registrado (Explicación JWT)
 
--Esto es para que cuando recargamos la página, la sesión se esta perdiendo, entonces con esto, hacemos que
-    se recuerde que el usuario ya esta autenticado.
+-Un JSON Web Token (JWT) es un estándar abierto para crear tokens y asegurar que el envío de datos es 
+    confiable y seguro, y que solo lo realiza un usuario que tenga permisos para hacerlo.
+-Nos va a permitir hacer peticiones que solo un usuario autenticado puede hacer, lo que nos ayudará con los
+    likes.
+-Para crear un JWT necesitamos 3 cosas (estas 3 son las partes que lo forman):
+    -HEADER: Objeto que define que algoritmo y tipo será el token.
+    -PAYLOAD: Información que estamos enviando.
+    -Una 'firma'.
+-Todo lo anterior estará cifrado, y se usa una palabra secreta para que el token sea unico.
 
--Recordando, al hacer el login o register, nos devuelve una promesa, lo devuelto por esa propesa será un
-    objeto, el cual tendrá otro llamado data, que tendrá un elemento cuyo key sería login/signup, y cuyo
-    valor sería el token (llamado JS Web Token) devuelto por Graphql que lo que nos indica es que el 
-    usuario está autendicado.
+Cómo funciona:
+    1.POST: Los usuarios se loguean con pass y user con una petición al server (hecho).
+    2.Despues, se crea un JWT (hecho).
+    3.Este se lo devuelve al navegador (hecho).
+    4.Hacer una petición al servidor y enviar el JWT en el header.
+    5.El server verifica que el token sea correcto.
+    6.El server devuelve la info que necesitamos.
 
-1.En el contexto, tenemos que hacer que la function activateAuth() (que indicaba si estabamos autenticados)
-    tenga un parametro, que será el token.
-2.A esta function, se le agregará el metodo window.sessionStorage.setItem(). Esta será para colocarle un
-    valor al objeto window.sessionStorage, por lo que como parametros recibe el key con el que se guardará
-    y su valor, que será el token.
-3.Damos valor al parametro donde se llamaba esta function (ya sabemos donde estarán estos token).
-4.Por defecto teniamos que el estado de sí esta autenticado erá false, ahora será una función que retorne
-    el token, este lo obtenemos con window.sessionStorage.getItem() y le pasamos el keyword.
+-Haciendo las pruebas manuales en el servidor, sí colocamos el mutatión, en las 'http headers' colocamos
+    un objeto con "authorization": "bearer [JWT]". Como resultado nos devolverá la data, con el id de la 
+    foto a la que se dió like, el estado de like en true, y la cantidad de like.
+-Sí realizamos la misma petición de nuevo, el like pasaría a false, y reduciría en 1 la cantidad de likes,
+    este es el efecto de los botones de like, donde al dar like a una foto que nos gusta, se quita el like.
 
--Para poder limpiar la sesión, en DevTools vamos a 'Aplication' > 'Clear storage'.
+1.Sí cambiamos el mutation al que necesitamos, y damos like, nos dirá que necesitamos estar logueados, pero
+    aunque lo hagamos, nos mostrará lo mismo, porque no estamos enviando el JWT guardado en el 
+    sessionStorage.
+2.Para corregirlo, donde creamos el cliente, despues de uri, agregamos un elemento 'request', esta será una
+    function, que se realizará siempre que se haga una petición al servidor. Esta tendrá un parametro 
+    'operations'.
+        .Debemos obtener el token del sessionStorage.
+        .Usaremos el metodo setContext() de 'operations', y colocaremos un objeto.
+        .Este objeto tendrá un objeto headers, con el header 'authorization' que se usó en el ejemplo con
+            el servidor.
+        .Es necesario que se valide, sí se colocó un token, que coloquemos el valor al header, en caso
+            contrario, que el header sea un string vacío. Para esto, guardaremos esto en una variable
+            'authorization' y esta la colocaremos dentro del objeto headers.
+3.Como el token se vence, despues de la función anterior, colocaremos otra llamada onError, que tenga como
+    parametro el error, de esta guardaremos su elemento 'networkError'
+        .De lo anterior validamos sí tiene valor, y sí el valor de su elemento result.code es 'invalid_token'
+            removemos el token del sessionStorage (removeItem()).
+        .Tambien, colocaremos esta variable window.location.href = '/', para que cuando se venza, nos mande 
+            al inicio y nos debamos autenticar de nuevo.
 
-El resto de lo que hacemos es una reestructuración del programa.
-    -Se exporto el contexto por aparte.
-    -Se importo, y se uso de este contexto solamente lo necesario.
-    -Para usarlo, en el componente que requiere algun dato de este contexto se usa useContext(contexto).
-    -Con esto, ya no se necesitaría el consumer, solo lo que vamos a renderizar.
+-En el componente PhotoCard donde se daban los likes, estabamos usando un custom hook del local storage
+    para guardar el like, ya no haremos esto, y los datos que necesitamos de estos, ahora los sacaremos
+    de las props.
