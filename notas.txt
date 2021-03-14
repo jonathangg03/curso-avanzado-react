@@ -1,49 +1,11 @@
-Hacer like como usuario registrado (Explicación JWT)
+Mostrar favoritos y solucionar fetch policy
 
--Un JSON Web Token (JWT) es un estándar abierto para crear tokens y asegurar que el envío de datos es 
-    confiable y seguro, y que solo lo realiza un usuario que tenga permisos para hacerlo.
--Nos va a permitir hacer peticiones que solo un usuario autenticado puede hacer, lo que nos ayudará con los
-    likes.
--Para crear un JWT necesitamos 3 cosas (estas 3 son las partes que lo forman):
-    -HEADER: Objeto que define que algoritmo y tipo será el token.
-    -PAYLOAD: Información que estamos enviando.
-    -Una 'firma'.
--Todo lo anterior estará cifrado, y se usa una palabra secreta para que el token sea unico.
+-La query para mostrar los favoritos tiene la particularidad de que sí no se le pasa el header con el JWT
+    nos devolverá error.
 
-Cómo funciona:
-    1.POST: Los usuarios se loguean con pass y user con una petición al server (hecho).
-    2.Despues, se crea un JWT (hecho).
-    3.Este se lo devuelve al navegador (hecho).
-    4.Hacer una petición al servidor y enviar el JWT en el header.
-    5.El server verifica que el token sea correcto.
-    6.El server devuelve la info que necesitamos.
-
--Haciendo las pruebas manuales en el servidor, sí colocamos el mutatión, en las 'http headers' colocamos
-    un objeto con "authorization": "bearer [JWT]". Como resultado nos devolverá la data, con el id de la 
-    foto a la que se dió like, el estado de like en true, y la cantidad de like.
--Sí realizamos la misma petición de nuevo, el like pasaría a false, y reduciría en 1 la cantidad de likes,
-    este es el efecto de los botones de like, donde al dar like a una foto que nos gusta, se quita el like.
-
-1.Sí cambiamos el mutation al que necesitamos, y damos like, nos dirá que necesitamos estar logueados, pero
-    aunque lo hagamos, nos mostrará lo mismo, porque no estamos enviando el JWT guardado en el 
-    sessionStorage.
-2.Para corregirlo, donde creamos el cliente, despues de uri, agregamos un elemento 'request', esta será una
-    function, que se realizará siempre que se haga una petición al servidor. Esta tendrá un parametro 
-    'operations'.
-        .Debemos obtener el token del sessionStorage.
-        .Usaremos el metodo setContext() de 'operations', y colocaremos un objeto.
-        .Este objeto tendrá un objeto headers, con el header 'authorization' que se usó en el ejemplo con
-            el servidor.
-        .Es necesario que se valide, sí se colocó un token, que coloquemos el valor al header, en caso
-            contrario, que el header sea un string vacío. Para esto, guardaremos esto en una variable
-            'authorization' y esta la colocaremos dentro del objeto headers.
-3.Como el token se vence, despues de la función anterior, colocaremos otra llamada onError, que tenga como
-    parametro el error, de esta guardaremos su elemento 'networkError'
-        .De lo anterior validamos sí tiene valor, y sí el valor de su elemento result.code es 'invalid_token'
-            removemos el token del sessionStorage (removeItem()).
-        .Tambien, colocaremos esta variable window.location.href = '/', para que cuando se venza, nos mande 
-            al inicio y nos debamos autenticar de nuevo.
-
--En el componente PhotoCard donde se daban los likes, estabamos usando un custom hook del local storage
-    para guardar el like, ya no haremos esto, y los datos que necesitamos de estos, ahora los sacaremos
-    de las props.
+-En este caso, la lista de las imagenes favoritas a renderizar las pasaremos por props.
+-A la hora de colocar el componente con el Query, como atributo, colocaremos fetchPolicy, y le daremos
+    como valor 'network-only', para que siempre saque la Información de la web (del server), y su primer
+    fuente de consulta no sea la cache (por defecto).
+-Esto lo que hará es que al darle like a una foto, en la pestaña de favoritos se actualice ese like (o 
+    dislike) y nos muestre esa foto, en caso contrario, habría que recargar la página para que se muestre.
