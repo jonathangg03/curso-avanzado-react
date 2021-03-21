@@ -1,7 +1,24 @@
-Cerrar sesión
+Últimos retoques a las rutas de nuestra aplicación
 
--En esta clase agregamos un metodo al contexto, para poner la variable que indica sí se esta autenticado en
-    false, y quitar el token del sessionStorage.
--Este metodo lo llamaremos en el click de un boton.
--Como añadido, hicimos que un botton sea reusable, pero para ello, tenemos que pasarle las props que los
-    componentes donde se colocará el boton requieren.
+-En esta clase realizamos la ruta por defecto, y algunos cambios para redireccionar en caso de que el user
+    no este autenticado.
+
+Variaciones en redirección:
+    -Imporaremos el la variable de autenticación del contexto.
+    -Agregaremos las condiciónes que habian en el mismo router del inicio.
+    -Para ello, haremos 3 condiciones, donde validaremos que la variable sea falsa.
+    -Sí se cumple, renderizamos NotRegistredUser en la ruta del login.
+    -Tambien, si se cumple, usamos el componente 'Redirect' de Reach router, este componente redirecciona
+        de un componente a otro. Tendrá como atributos 'from' y 'to', indicando desde que ruta va y hacia
+        adonde.
+    -De estas colocaremos 2, una que dirija de /favs y otra de /user, ambas hacia '/login'. Ambas en caso
+        de que isAuth sea falso.
+    -Esto hará que sí no estamos autenticados, e intentamos ir a /favs o /user, nos redirja a '/login'.
+
+Ruta por defecto:
+    -Se usará para el 404.
+    -Se coloca el componente en el router, y se le pasa el atributo 'default'.
+
+-Sí hacemos esto, al loguearnos, como la página de login no existe sí ya estamos logueados, y aun así la
+    estamos mostrando, nos dará el NotFound, para solucionarlo, validamos sí estamos autenticados, y si 
+    es correcto, redireccionamos de login al home.
