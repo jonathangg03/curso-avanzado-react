@@ -1,24 +1,19 @@
-Últimos retoques a las rutas de nuestra aplicación
+React Helmet
 
--En esta clase realizamos la ruta por defecto, y algunos cambios para redireccionar en caso de que el user
-    no este autenticado.
+-Se cree que las SPA no manejan bien el SEO, pero esto es falso, ya que con herramientas como React
+    Helmet se puede hacer.
 
-Variaciones en redirección:
-    -Imporaremos el la variable de autenticación del contexto.
-    -Agregaremos las condiciónes que habian en el mismo router del inicio.
-    -Para ello, haremos 3 condiciones, donde validaremos que la variable sea falsa.
-    -Sí se cumple, renderizamos NotRegistredUser en la ruta del login.
-    -Tambien, si se cumple, usamos el componente 'Redirect' de Reach router, este componente redirecciona
-        de un componente a otro. Tendrá como atributos 'from' y 'to', indicando desde que ruta va y hacia
-        adonde.
-    -De estas colocaremos 2, una que dirija de /favs y otra de /user, ambas hacia '/login'. Ambas en caso
-        de que isAuth sea falso.
-    -Esto hará que sí no estamos autenticados, e intentamos ir a /favs o /user, nos redirja a '/login'.
+-Se instala con el nombre react-helmet.
+-Se importará 'Helmet' de esta dependencia.
+-Se coloca como un componente, en nuestro caso lo hacemos en la página del Home, pero se puede hacer en 
+    cualquier parte sin problemas.
+-Dentro de este componente, se colocan todas las etiquetas del <head> que se desea que cambien según el 
+    componente en el que nos encontramos.
+-De esta forma, dependiendo de la página en la que estemos, podremos cambiar el title del tab.
 
-Ruta por defecto:
-    -Se usará para el 404.
-    -Se coloca el componente en el router, y se le pasa el atributo 'default'.
-
--Sí hacemos esto, al loguearnos, como la página de login no existe sí ya estamos logueados, y aun así la
-    estamos mostrando, nos dará el NotFound, para solucionarlo, validamos sí estamos autenticados, y si 
-    es correcto, redireccionamos de login al home.
+Layout:
+    -Otra forma es hacer un layout, con props que den valor al title, o al description (meta que tambien
+        usamos).
+    -Primero arriba colocamos el Helment, y despues de este, el children, de forma de que, al encerrar una
+        pagina dentro de este layout, y darle valor a sus props, reusamos este layout, y su title será
+        especifico.
