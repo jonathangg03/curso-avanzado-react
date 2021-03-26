@@ -1,6 +1,7 @@
 PWA: generando el manifest
 
 -Haremos de la aplicación una PWA.
+-Para saber si cumple, usaremos Lighthouse.
 -Para conseguirlo 1ero debemos saber en que estado nos encontramos, y que es lo que nos falta para conseguirlo.
 -Luego, usaremos algunos planes de webpack que nos facilitan su desarrollo.
 -En este caso, aprenderemos a solucionar los problemas que le aparecieron al profesor:
@@ -30,3 +31,8 @@ Crear un manifest:
         ]
 
 -En el caso de los iconos, usamos una de las imagenes como ejemplo, pero puede ser cualquiera.
+-Sí nos lanza un error sobre la imagen de 144px, añadiremos otro icono con la misma imagen, pero solo para el
+    tamaño de 144px, y el purpose será 'any'.
+
+-Sí hacemos el dist, vemos que se generaron todas las imagenes del icono según los tamaños, y se generó el
+    manifest.

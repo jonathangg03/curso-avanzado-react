@@ -36,6 +36,11 @@ module.exports = {
           src: path.resolve('src/assets/icon.png'), // icono a resolver
           sizes: [96, 128, 144, 192, 256, 384, 512], // tamaños en los que este puede estar (son tamaños que estan regularmente en moviles)
           purpose: 'maskable'
+        },
+        {
+          src: path.resolve('src/assets/icon.png'), // icono a resolver
+          sizes: [144], // tamaños en los que este puede estar (son tamaños que estan regularmente en moviles)
+          purpose: 'any'
         }
       ]
     })
