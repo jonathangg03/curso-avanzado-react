@@ -1,41 +1,32 @@
-Usando PropTypes para validar el tipo de las props
+PWA: generando el manifest
 
--Las PropTypes serán un validador del tipo de datos que estamos recibiendo COMO PROPS en nuestros componentes, 
-    el cual nos permitirá a que sea exclusivamente ese tipo de datos.
--Esto será util conforme la app se vaya haciendo más grande.
--PropTypes antes estaba en el core de React, ahorá será una librería externa,
--Su nombre de instalación es: prop-types, y se instala como desarrollo.
+-Haremos de la aplicación una PWA.
+-Para conseguirlo 1ero debemos saber en que estado nos encontramos, y que es lo que nos falta para conseguirlo.
+-Luego, usaremos algunos planes de webpack que nos facilitan su desarrollo.
+-En este caso, aprenderemos a solucionar los problemas que le aparecieron al profesor:
 
-Uso:
-    -Importamos prop-types.
-    -Despues de crear el componente, de este, le daremos como valor a su elemento 'propTypes' un objeto.
-    -Cada key de ese objeto será cada prop del componente.
-    -Como value tendremos un elemento del prop-types, ese elemento será el tipo de esa prop.
-    -Sí seguido de ese tipo, se coloca el elemento isRequired, dicha prop debe tener un valor obligatoriamente.
+Redireccionar el contenido cuando JS no este activado en el navegador:
+    -En el html, colocamos antes de la etiqueta de cierre del body una etiqueta 'noscript'.
+    -Esta renderizará lo que tenga internamente cuando el navegador no tenga el JS activado.
 
-Tipos:
-    -string.
-    -bool: boleanos.
-    -number: números.
-    -func: para funciónes, tambien cuando tenemos como prop eventos como onClick.
-    -node: usado para la prop children.
-    -array: arrays.
-    -arrayOf(): Se define un array de un tipo especifico, dentro tendrá el tipo.
-        .PropTypes.shape(): Dentro del arrayOf() podemos definir la forma que tendrá un arreglo con el tipo 
-            shape(). Sí ponemos como param. un objeto, indicamos que será un array de objetos.
-        .Sí dentro de ese objeto, colocamos keys, y como valor tipos, indicamos en que la forma del array será
-            un array de objetos, ese objeto tendrá esos keys con esos tipos.
-        .Así definimos la forma especifica que tendrá un array.
+Añadir apple-touch:
+    -Añadir esta etiqueta al head: <link rel="apple-touch-icon" href="/src/assets/icon.png">
 
-Custom propTypes:
-    -Podemos customizar los errores a mostrar en caso de que el valor colocado cumpla con la condición para 
-        lanzar un error.
-    -Por ejemplo, si ocupamos que el valor sea mayor a 0, pero se ingresó -1, que se muestre un error sobre eso.
-    -Lo que hacemos es que en lugar de colocar un tipo, colocamos una función.
-    -Este tiene 3 parametros:
-        1.props: Objeto con la prop y su valor.
-        2.propName: Contiene el nombre de la prop actual.
-        3.componentName: Nombre del componente actual (no necesario).
-    -Validaremos que el valor de la prop actual cumpla con alguna condición que nosotros queremos que, si se 
-        cumple, se retorne un error (new Error()).
-    -Esto por sí el valor que se dió a la prop, no es el deseado.
+Crear un manifest:
+    -Instalamos como desarrollo webpack-pwa-manifest.
+    -Lo importamos en la conf. de webpack, y path tambien.
+    -Esta dependencia instalada será un plugin, por lo que lo que pondremos ahorá será la configuración:
+        name: 'Petgram - Tu app de fotos de mascotas', // Nombre largo
+        short_name: 'Petgram', //Nombre corto
+        description: 'Con Petgram puedes encontrar fotos de animales domesticos muy facilmente',
+        background_color: '#fff',// Color de fondo
+        theme_color: '#b1a',// Color del tema
+        icons: [// Resolvemos los iconos que necesitará la app
+            {
+                src: path.resolve('src/assets/icon.png'), // icono a resolver
+                sizes: [96, 128, 192, 256, 384, 512], // tamaños en los que este puede estar (son tamaños que estan regularmente en moviles)
+                purpose: 'maskable'
+            }
+        ]
+
+-En el caso de los iconos, usamos una de las imagenes como ejemplo, pero puede ser cualquiera.
