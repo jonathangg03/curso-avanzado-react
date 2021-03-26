@@ -1,19 +1,39 @@
-React Helmet
+Midiendo el performance de nuestra app y usando React.memo()
 
--Se cree que las SPA no manejan bien el SEO, pero esto es falso, ya que con herramientas como React
-    Helmet se puede hacer.
+-Es importante poder medir la performance de nuestra app.
+-Con el nuevo script para webpack-dev-server, como estamos sirviendo los archivos en el modo de desarrollo, ya
+    podemos ir a la pestaña performance en devTools.
+-Sí vamos a la sección 'Performance', le damos en el signo de 'reload' de esta pestaña, cuando termine de cargar
+    la página le damos stop.
+-De esta forma podemos ver los tiempos que ha durado cada cosa en realizarse.
+-Abajo de la línea de tiempo, vemos diferentes pestañas, horizontales, como 'timing' o 'main', donde podemos
+    medir diferentes cosas. Podemos cerrar alguna para ver mejor otra.
 
--Se instala con el nombre react-helmet.
--Se importará 'Helmet' de esta dependencia.
--Se coloca como un componente, en nuestro caso lo hacemos en la página del Home, pero se puede hacer en 
-    cualquier parte sin problemas.
--Dentro de este componente, se colocan todas las etiquetas del <head> que se desea que cambien según el 
-    componente en el que nos encontramos.
--De esta forma, dependiendo de la página en la que estemos, podremos cambiar el title del tab.
+-Otra forma de medir esto, es si usamos react-dev-tools, en la pestaña 'Profiler'. Sí estamos en una pestaña,
+    grabamos, y por ejemplo, damos click en otra categoría, y paramos la grabación, nos muestra los resultados.
+-El número que muestra es el numero de pasos que hace para renderizar, podemos ir viendo que renderiza en 
+    cada paso.
+-Algo que llama la atención sí grabamos haciendo exactamente estos pasos, es que vemos que 'ListOfCategories' se
+    esta volviendo a renderizar, cosa que no debería ser, porque no ha cambiado en nada.
+-Ahora solucionaremos este problema.
 
-Layout:
-    -Otra forma es hacer un layout, con props que den valor al title, o al description (meta que tambien
-        usamos).
-    -Primero arriba colocamos el Helment, y despues de este, el children, de forma de que, al encerrar una
-        pagina dentro de este layout, y darle valor a sus props, reusamos este layout, y su title será
-        especifico.
+Solución con react.memo():
+    -Nos movemos al componente que es el que se coloca en la página.
+    -El lo que exportaremos será el metodo de react memo().
+    -Por parametro tendrá el componente a renderizar (lo que antes se exportaba).
+
+-En casó de que hagamos click en una categoría en la que ya estamos actualmente, sí volvemos a realizar una 
+    grabación, vemos que Home se renderiza inecesariamente, porque nada ha cambiado, entonces haremos lo mismo.
+-El caso es que home solo haremos que se re-renderice sí sus props han cambiado:
+    .Agregamos una función como 2do param. a memo().
+    .Esta tiene como params. las props anteriores y las props actuales.
+    .Sí tenemos una prop llamada categoryId, está estará dentro de estos 2 parametros (en ambos).
+    .en esta retornaremos la comparación de sí esa prop es igual en ambos params.
+    .En caso de ser cierto, no se re-renderizará nada.
+-Sí en home no hacemos esto ultimo, no se volverá a renderizar nada, aunque cambiemos de catogoría, por esto
+    hay que tener cuidado al usar memo().
+
+-Sí la performance no es tan importante, o no se daña tanto, no es necesario usarlo, pero es bueno conocerlo.
+
+Nota: En caso de necesitarlo, sí no tenemos la pestaña performance, aquí está el script para servir dist:
+    -"webpack serve --mode 'development' && npx serve dist -s"
