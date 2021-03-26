@@ -1,18 +1,41 @@
-React.lazy() y componente Suspense
+Usando PropTypes para validar el tipo de las props
 
--No es necesario cargar e importar cada componente en toda la página, sino que las importaremos solo cuando
-    las necesitamos.
--Para eso usaremos el metodo lazy() de react.
+-Las PropTypes serán un validador del tipo de datos que estamos recibiendo COMO PROPS en nuestros componentes, 
+    el cual nos permitirá a que sea exclusivamente ese tipo de datos.
+-Esto será util conforme la app se vaya haciendo más grande.
+-PropTypes antes estaba en el core de React, ahorá será una librería externa,
+-Su nombre de instalación es: prop-types, y se instala como desarrollo.
 
-Uso de metodo lazy:
-    -Ya no importaremos el componente como siempre, sino que guardaremos en una const el metodo lazy().
-    -Como parametro tiene una función, esta debe retornar un import dinamico con el componente a usar.
-    -Para el import dinamico, solo se usa el metodo import() con la ruta.
-    -Para que esto funcione, el componente que va a usar este componente con el import dinamico debe estar 
-        encapsulado por un componente de react llamado 'Suspense' .
-    -Suspense necesita un atributo fallback, este tendrá un componente o elemento html que renderizará mientras
-        el componente principal se renderiza.
-    -Finalmente, el componente que se va a traer mediante el import dinamico, debe exportarse de forma defaul,
-        de lo contrario no servirá.
+Uso:
+    -Importamos prop-types.
+    -Despues de crear el componente, de este, le daremos como valor a su elemento 'propTypes' un objeto.
+    -Cada key de ese objeto será cada prop del componente.
+    -Como value tendremos un elemento del prop-types, ese elemento será el tipo de esa prop.
+    -Sí seguido de ese tipo, se coloca el elemento isRequired, dicha prop debe tener un valor obligatoriamente.
 
--En nuestro ejemplo, en el App, lo hacemos solo con el componente Favs, pero lo ideal es hacerlo con todos.
+Tipos:
+    -string.
+    -bool: boleanos.
+    -number: números.
+    -func: para funciónes, tambien cuando tenemos como prop eventos como onClick.
+    -node: usado para la prop children.
+    -array: arrays.
+    -arrayOf(): Se define un array de un tipo especifico, dentro tendrá el tipo.
+        .PropTypes.shape(): Dentro del arrayOf() podemos definir la forma que tendrá un arreglo con el tipo 
+            shape(). Sí ponemos como param. un objeto, indicamos que será un array de objetos.
+        .Sí dentro de ese objeto, colocamos keys, y como valor tipos, indicamos en que la forma del array será
+            un array de objetos, ese objeto tendrá esos keys con esos tipos.
+        .Así definimos la forma especifica que tendrá un array.
+
+Custom propTypes:
+    -Podemos customizar los errores a mostrar en caso de que el valor colocado cumpla con la condición para 
+        lanzar un error.
+    -Por ejemplo, si ocupamos que el valor sea mayor a 0, pero se ingresó -1, que se muestre un error sobre eso.
+    -Lo que hacemos es que en lugar de colocar un tipo, colocamos una función.
+    -Este tiene 3 parametros:
+        1.props: Objeto con la prop y su valor.
+        2.propName: Contiene el nombre de la prop actual.
+        3.componentName: Nombre del componente actual (no necesario).
+    -Validaremos que el valor de la prop actual cumpla con alguna condición que nosotros queremos que, si se 
+        cumple, se retorne un error (new Error()).
+    -Esto por sí el valor que se dió a la prop, no es el deseado.
