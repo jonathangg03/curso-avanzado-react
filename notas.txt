@@ -1,39 +1,18 @@
-Midiendo el performance de nuestra app y usando React.memo()
+React.lazy() y componente Suspense
 
--Es importante poder medir la performance de nuestra app.
--Con el nuevo script para webpack-dev-server, como estamos sirviendo los archivos en el modo de desarrollo, ya
-    podemos ir a la pestaña performance en devTools.
--Sí vamos a la sección 'Performance', le damos en el signo de 'reload' de esta pestaña, cuando termine de cargar
-    la página le damos stop.
--De esta forma podemos ver los tiempos que ha durado cada cosa en realizarse.
--Abajo de la línea de tiempo, vemos diferentes pestañas, horizontales, como 'timing' o 'main', donde podemos
-    medir diferentes cosas. Podemos cerrar alguna para ver mejor otra.
+-No es necesario cargar e importar cada componente en toda la página, sino que las importaremos solo cuando
+    las necesitamos.
+-Para eso usaremos el metodo lazy() de react.
 
--Otra forma de medir esto, es si usamos react-dev-tools, en la pestaña 'Profiler'. Sí estamos en una pestaña,
-    grabamos, y por ejemplo, damos click en otra categoría, y paramos la grabación, nos muestra los resultados.
--El número que muestra es el numero de pasos que hace para renderizar, podemos ir viendo que renderiza en 
-    cada paso.
--Algo que llama la atención sí grabamos haciendo exactamente estos pasos, es que vemos que 'ListOfCategories' se
-    esta volviendo a renderizar, cosa que no debería ser, porque no ha cambiado en nada.
--Ahora solucionaremos este problema.
+Uso de metodo lazy:
+    -Ya no importaremos el componente como siempre, sino que guardaremos en una const el metodo lazy().
+    -Como parametro tiene una función, esta debe retornar un import dinamico con el componente a usar.
+    -Para el import dinamico, solo se usa el metodo import() con la ruta.
+    -Para que esto funcione, el componente que va a usar este componente con el import dinamico debe estar 
+        encapsulado por un componente de react llamado 'Suspense' .
+    -Suspense necesita un atributo fallback, este tendrá un componente o elemento html que renderizará mientras
+        el componente principal se renderiza.
+    -Finalmente, el componente que se va a traer mediante el import dinamico, debe exportarse de forma defaul,
+        de lo contrario no servirá.
 
-Solución con react.memo():
-    -Nos movemos al componente que es el que se coloca en la página.
-    -El lo que exportaremos será el metodo de react memo().
-    -Por parametro tendrá el componente a renderizar (lo que antes se exportaba).
-
--En casó de que hagamos click en una categoría en la que ya estamos actualmente, sí volvemos a realizar una 
-    grabación, vemos que Home se renderiza inecesariamente, porque nada ha cambiado, entonces haremos lo mismo.
--El caso es que home solo haremos que se re-renderice sí sus props han cambiado:
-    .Agregamos una función como 2do param. a memo().
-    .Esta tiene como params. las props anteriores y las props actuales.
-    .Sí tenemos una prop llamada categoryId, está estará dentro de estos 2 parametros (en ambos).
-    .en esta retornaremos la comparación de sí esa prop es igual en ambos params.
-    .En caso de ser cierto, no se re-renderizará nada.
--Sí en home no hacemos esto ultimo, no se volverá a renderizar nada, aunque cambiemos de catogoría, por esto
-    hay que tener cuidado al usar memo().
-
--Sí la performance no es tan importante, o no se daña tanto, no es necesario usarlo, pero es bueno conocerlo.
-
-Nota: En caso de necesitarlo, sí no tenemos la pestaña performance, aquí está el script para servir dist:
-    -"webpack serve --mode 'development' && npx serve dist -s"
+-En nuestro ejemplo, en el App, lo hacemos solo con el componente Favs, pero lo ideal es hacerlo con todos.
