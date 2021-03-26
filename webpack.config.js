@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const WebpackPwaManifestPlugin = require('webpack-pwa-manifest')
+const WorkboxWebpackPlugin = require('workbox-webpack-plugin')
 const path = require('path')
 module.exports = {
   output: {
@@ -41,6 +42,24 @@ module.exports = {
           src: path.resolve('src/assets/icon.png'), // icono a resolver
           sizes: [144], // tamaños en los que este puede estar (son tamaños que estan regularmente en moviles)
           purpose: 'any'
+        }
+      ]
+    }),
+    new WorkboxWebpackPlugin.GenerateSW({
+      runtimeCaching: [
+        {
+          urlPattern: new RegExp('https://(res.cloudinary.com|images.unsplash.com)'),
+          handler: 'CacheFirst',
+          options: {
+            cacheName: 'images'
+          }
+        },
+        {
+          urlPattern: new RegExp('https://petgram-server-khaki-psi.vercel.app'),
+          handler: 'NetworkFirst',
+          options: {
+            cacheName: 'api'
+          }
         }
       ]
     })

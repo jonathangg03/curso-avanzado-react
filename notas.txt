@@ -1,38 +1,43 @@
-PWA: generando el manifest
+PWA: soporte offline
 
--Haremos de la aplicación una PWA.
--Para saber si cumple, usaremos Lighthouse.
--Para conseguirlo 1ero debemos saber en que estado nos encontramos, y que es lo que nos falta para conseguirlo.
--Luego, usaremos algunos planes de webpack que nos facilitan su desarrollo.
--En este caso, aprenderemos a solucionar los problemas que le aparecieron al profesor:
+-Utilizaremos workbox-webpack-plugin para agregar soporte online a nuestro proyecto, así como lo hacen Twitter 
+    e Instagram cuando entramos desde el navegador.
+-De igual forma, lo colocaremos en plugins, pero no a el directamente, sino a su elemento GenerateSW.
+-En su conf irá lo siguiente:
+    runtimeCaching: [
+        {
+          urlPattern: new RegExp('https://(res.cloudinary.com|images.unsplash.com)'),
+          handler: 'CacheFirst',
+          options: {
+            cacheName: 'images'
+          }
+        },
+        {
+          urlPattern: new RegExp('https://petgram-server-khaki-psi.vercel.app'),
+          handler: 'NetworkFirst',
+          options: {
+            cacheName: 'api'
+          }
+        }
+    ]
+-Explicando la conf:
+    .Agregaremos un runtimeCaching por cada fuente externa, en nuestro caso tenemos una para las imagenes, y
+        otra para el servidor con la api. Se colocan como expresiones regulares, por eso, podemos colocar las
+        2 urls juntas en la de las imagenes.
+    .Seguimos el resto de la conf igual, si buscamos info. del api, colocamos en el handler 'NetworkFirst'.
+    .En las options, colocamos el nombre deseado a la cache.
 
-Redireccionar el contenido cuando JS no este activado en el navegador:
-    -En el html, colocamos antes de la etiqueta de cierre del body una etiqueta 'noscript'.
-    -Esta renderizará lo que tenga internamente cuando el navegador no tenga el JS activado.
+-Haciendo esto, aun no lo terminamos, ya que a diferencia del manifest, este no se coloca de forma automatica
+    dentro del html.
+-Para colocarlo, nos iremos al html (de desarrollo):
+    .Colocamos un script despues del noscript.
+    .En este script, validaremos 1ero sí 'serviceWorker' (string) esta en el objeto 'navigator'.
+    .En ese caso, agregamos al window un evento 'load'.
+    .Su función, usará el metodo register, del elemento serviceWorker del navigator. Y como parametro, la 
+        dirección del SW que se generará. Al generar el html, el SW estará a la misma altura dentro de dist.
+    .Esto devuelve una promesa, por lo que podemos manejar su error o su exito.
 
-Añadir apple-touch:
-    -Añadir esta etiqueta al head: <link rel="apple-touch-icon" href="/src/assets/icon.png">
-
-Crear un manifest:
-    -Instalamos como desarrollo webpack-pwa-manifest.
-    -Lo importamos en la conf. de webpack, y path tambien.
-    -Esta dependencia instalada será un plugin, por lo que lo que pondremos ahorá será la configuración:
-        name: 'Petgram - Tu app de fotos de mascotas', // Nombre largo
-        short_name: 'Petgram', //Nombre corto
-        description: 'Con Petgram puedes encontrar fotos de animales domesticos muy facilmente',
-        background_color: '#fff',// Color de fondo
-        theme_color: '#b1a',// Color del tema
-        icons: [// Resolvemos los iconos que necesitará la app
-            {
-                src: path.resolve('src/assets/icon.png'), // icono a resolver
-                sizes: [96, 128, 192, 256, 384, 512], // tamaños en los que este puede estar (son tamaños que estan regularmente en moviles)
-                purpose: 'maskable'
-            }
-        ]
-
--En el caso de los iconos, usamos una de las imagenes como ejemplo, pero puede ser cualquiera.
--Sí nos lanza un error sobre la imagen de 144px, añadiremos otro icono con la misma imagen, pero solo para el
-    tamaño de 144px, y el purpose será 'any'.
-
--Sí hacemos el dist, vemos que se generaron todas las imagenes del icono según los tamaños, y se generó el
-    manifest.
+-Sí hacemos un informe en Lighthouse, vemos que ya nos dice que tenemos una PWA.
+-Ya podremos instalarla, y ver todo como una aplicación de escritorio.
+-Tambien, si desconectamos el internet, la página cargará, pero solo los valores por defecto, no con info traida
+    de graphql. Para solucionarlo, existen herramientas como apollo-offline, pero no se cubre en este curso.
