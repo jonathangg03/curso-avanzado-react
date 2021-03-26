@@ -1,43 +1,12 @@
-PWA: soporte offline
+Testing con Cypress
 
--Utilizaremos workbox-webpack-plugin para agregar soporte online a nuestro proyecto, así como lo hacen Twitter 
-    e Instagram cuando entramos desde el navegador.
--De igual forma, lo colocaremos en plugins, pero no a el directamente, sino a su elemento GenerateSW.
--En su conf irá lo siguiente:
-    runtimeCaching: [
+-Sí hacemos deploy de nuestra app a Vercel (comando vercel), nos tirá un error en consola acerca de un png.
+-Para solucionarlo, vamos a la raiz, en el archivo vercel.json, en 'routes' agregamos un nuevo
+    objeto con esto:
         {
-          urlPattern: new RegExp('https://(res.cloudinary.com|images.unsplash.com)'),
-          handler: 'CacheFirst',
-          options: {
-            cacheName: 'images'
-          }
-        },
-        {
-          urlPattern: new RegExp('https://petgram-server-khaki-psi.vercel.app'),
-          handler: 'NetworkFirst',
-          options: {
-            cacheName: 'api'
-          }
+            "src": "(.*).png",
+            "dest": "/$1.png"
         }
-    ]
--Explicando la conf:
-    .Agregaremos un runtimeCaching por cada fuente externa, en nuestro caso tenemos una para las imagenes, y
-        otra para el servidor con la api. Se colocan como expresiones regulares, por eso, podemos colocar las
-        2 urls juntas en la de las imagenes.
-    .Seguimos el resto de la conf igual, si buscamos info. del api, colocamos en el handler 'NetworkFirst'.
-    .En las options, colocamos el nombre deseado a la cache.
+-Hacemos el deploy y debería estar listo.
 
--Haciendo esto, aun no lo terminamos, ya que a diferencia del manifest, este no se coloca de forma automatica
-    dentro del html.
--Para colocarlo, nos iremos al html (de desarrollo):
-    .Colocamos un script despues del noscript.
-    .En este script, validaremos 1ero sí 'serviceWorker' (string) esta en el objeto 'navigator'.
-    .En ese caso, agregamos al window un evento 'load'.
-    .Su función, usará el metodo register, del elemento serviceWorker del navigator. Y como parametro, la 
-        dirección del SW que se generará. Al generar el html, el SW estará a la misma altura dentro de dist.
-    .Esto devuelve una promesa, por lo que podemos manejar su error o su exito.
-
--Sí hacemos un informe en Lighthouse, vemos que ya nos dice que tenemos una PWA.
--Ya podremos instalarla, y ver todo como una aplicación de escritorio.
--Tambien, si desconectamos el internet, la página cargará, pero solo los valores por defecto, no con info traida
-    de graphql. Para solucionarlo, existen herramientas como apollo-offline, pero no se cubre en este curso.
+-Esta clase no la pudimos hacer, ya que cypress no funcionó.
